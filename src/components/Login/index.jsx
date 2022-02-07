@@ -1,9 +1,11 @@
 import { useAuth } from "reactfire";
 import firebase from "firebase";
 import "firebase/auth";
+import "./index.scss";
+import google from "../../assets/google.svg";
 
 export default function Login() {
-    const auth = firebase.auth();
+    const auth = useAuth();
     const provider = new firebase.auth.GoogleAuthProvider();
 
     const signIn = async () => {
@@ -21,6 +23,15 @@ export default function Login() {
     return (
         <div>
             <button onClick={() => signIn()}>Login</button>
+            <div className="login_container">
+                <div className="login_form">
+                    <div>Yogasaan</div>
+                    <div tabIndex={0} className="signin_with_google" onClick={()=>signIn()}>
+                        <img src={google} alt="" className="icon" />
+                        Continue with Google
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

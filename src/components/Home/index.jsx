@@ -1,5 +1,6 @@
 import { useAuth } from "reactfire";
 import "firebase/auth";
+import "./index.scss";
 
 export default function Home() {
     const auth = useAuth();

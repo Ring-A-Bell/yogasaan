@@ -1,4 +1,4 @@
-import { useAuth, FirebaseAppProvider } from "reactfire";
+import { AuthCheck, FirebaseAppProvider } from "reactfire";
 import "./App.scss";
 import "firebase/auth";
 import Login from "./components/Login";
@@ -17,11 +17,11 @@ function App() {
   };
 
   return (
-    <div className="main">
+    <div className={"main"}>
       <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-        <useAuth fallback={<Login />}>
+        <AuthCheck fallback={<Login />}>
           <Home />
-        </useAuth>
+        </AuthCheck>
       </FirebaseAppProvider>
     </div>
   );
