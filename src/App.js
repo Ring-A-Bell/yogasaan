@@ -1,8 +1,10 @@
 import { AuthCheck, FirebaseAppProvider } from "reactfire";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.scss";
 import "firebase/auth";
 import Login from "./components/Login";
 import Home from "./components/Home";
+import Header from "./components/Header";
 
 function App() {
 
@@ -21,6 +23,16 @@ function App() {
       <FirebaseAppProvider firebaseConfig={firebaseConfig}>
         <AuthCheck fallback={<Login />}>
           <Home />
+          <Router>
+            <Header />
+            <Routes>
+              <Route path="/stats">stats</Route>
+              <Route path="/profile">profile</Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Routes>
+          </Router>
         </AuthCheck>
       </FirebaseAppProvider>
     </div>
