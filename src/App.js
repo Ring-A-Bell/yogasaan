@@ -5,6 +5,8 @@ import "firebase/auth";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Header from "./components/Header";
+import Pose from "./components/Pose";
+
 
 function App() {
 
@@ -26,11 +28,10 @@ function App() {
           <Router>
             <Header />
             <Routes>
+              <Route path="/pose" element={<Pose poseID={"4XIRMFpmKmUiFNjWgUrr"}/>}></Route>
               <Route path="/stats">stats</Route>
               <Route path="/profile">profile</Route>
-              <Route path="/">
-                <Home />
-              </Route>
+              <Route path="/" element={<Home />}></Route>
             </Routes>
           </Router>
         </AuthCheck>
