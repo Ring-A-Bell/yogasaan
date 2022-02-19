@@ -1,12 +1,9 @@
 @import "../scss/fonts";
-@import "../scss/colors";
 
 .home {
   .card_container {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    overflow: auto;
   }
   .home_heading {
     font-family: $rubik;

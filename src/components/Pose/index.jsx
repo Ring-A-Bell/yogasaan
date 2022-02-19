@@ -3,11 +3,13 @@ import Posenet from "react-posenet";
 import { Suspense, useState } from "react";
 import { StorageImage, useFirestore, useFirestoreDocData } from "reactfire";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { Navigate } from "react-router";
+import { Navigate, useLocation } from "react-router";
 import { checkJoints } from "../../utils/getAngles";
 
 
-export default function Pose({ poseID }) {
+export default function Pose() {
+    const query = new URLSearchParams(useLocation().search);
+    const poseID = query.get("pid");
     const poseRef = useFirestore().collection("poses").doc(poseID);
     const pose = useFirestoreDocData(poseRef);
 
@@ -50,7 +52,7 @@ export default function Pose({ poseID }) {
                 </div>
 
                 <div className="pose_actual">
-                    <Posenet onEstimate = { poses => { console.log(checkJoints(poses[0]))}} />
+                    npm start<Posenet onEstimate = { poses => { console.log(checkJoints(poses[0]))}} />
                 </div>
             </div>
         </Suspense>
