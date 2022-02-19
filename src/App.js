@@ -28,10 +28,10 @@ function App() {
           <Router>
             <Header />
             <Routes>
-              <Route path="/pose" element={<Pose poseID={"4XIRMFpmKmUiFNjWgUrr"}/>}></Route>
+              <Route path="/" element={<Home />}></Route>
               <Route path="/stats">stats</Route>
               <Route path="/profile">profile</Route>
-              <Route path="/" element={<Home />}></Route>
+              <Route path="/pose" element={<Pose poseID={"4XIRMFpmKmUiFNjWgUrr"}/>}></Route>
             </Routes>
           </Router>
         </AuthCheck>
