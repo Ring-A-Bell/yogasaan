@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import Header from "./components/Header";
 import Pose from "./components/Pose";
+import Profile from "./components/Profile";
 
 
 function App() {
@@ -24,15 +25,16 @@ function App() {
     <div className={"main"}>
       <FirebaseAppProvider firebaseConfig={firebaseConfig}>
         <AuthCheck fallback={<Login />}>
-          <Home />
           <Router>
             <Header />
-            <Routes>
-              <Route path="/" element={<Home />}></Route>
-              <Route path="/stats">stats</Route>
-              <Route path="/profile">profile</Route>
-              <Route path="/pose" element={<Pose poseID={"4XIRMFpmKmUiFNjWgUrr"}/>}></Route>
-            </Routes>
+              <div className="content">
+                <Routes>
+                  <Route path="/" element={<Home />}></Route>
+                  <Route path="/stats">stats</Route>
+                  <Route path="/profile" element={<Profile />}></Route>
+                  <Route path="/pose" element={<Pose poseID={"4XIRMFpmKmUiFNjWgUrr"}/>}></Route>
+                </Routes>
+              </div>
           </Router>
         </AuthCheck>
       </FirebaseAppProvider>
