@@ -3,7 +3,10 @@
 .home {
   .card_container {
     width: 100%;
-    overflow: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
   .home_heading {
     font-family: $rubik;
