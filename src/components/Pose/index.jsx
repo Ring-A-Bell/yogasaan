@@ -16,9 +16,15 @@ export default function Pose() {
     const [start, setStart] = useState(false);
     const [finished, setFinish] = useState(false);
 
+    const handlePose = (p) => {
+        if(p && start) {
+            const ang = checkJoints(p[0]);
+            console.log(ang);
+        }
+    };
+
     return (
         <Suspense fallback="Loading">
-            {finished && <Navigate to="/poseResult" />}
             <div className="pose">
                 <div className="pose_sample">
                     <div className="pose_title">{pose.data?.name}</div>
@@ -52,7 +58,7 @@ export default function Pose() {
                 </div>
 
                 <div className="pose_actual">
-                    npm start<Posenet onEstimate = { poses => { console.log(checkJoints(poses[0]))}} />
+                    <Posenet onEstimate = { handlePose}/>
                 </div>
             </div>
         </Suspense>
