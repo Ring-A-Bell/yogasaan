@@ -1,7 +1,7 @@
 import { StorageImage } from "reactfire";
 import "./index.scss";
 
-export default function Card({ title, onClick, path }) {
+export default function Card({ title, onClick, reqdangles, path }) {
 
 
     return (

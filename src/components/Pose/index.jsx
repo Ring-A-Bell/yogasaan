@@ -1,66 +1,85 @@
 import "./index.scss";
 import Posenet from "react-posenet";
 import { Suspense, useState } from "react";
-import { StorageImage, useFirestore, useFirestoreDocData } from "reactfire";
+import { StorageImage, useFirestore, useFirestoreCollectionData, useFirestoreDocDataOnce } from "reactfire";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { Navigate, useLocation } from "react-router";
 import { checkJoints } from "../../utils/getAngles";
+import { getScore } from "../../utils/getScore";
+import Result from "../Result";
 
 
 export default function Pose() {
     const query = new URLSearchParams(useLocation().search);
     const poseID = query.get("pid");
     const poseRef = useFirestore().collection("poses").doc(poseID);
-    const pose = useFirestoreDocData(poseRef);
+    const pose = useFirestoreDocDataOnce(poseRef);
+    const angles = useFirestoreCollectionData(poseRef);
 
     const [start, setStart] = useState(false);
-    const [finished, setFinish] = useState(false);
+    const [finish, setFinish] = useState(false);
+    const [score, setScore] = useState(0);
+    const [frames, setFrames] = useState(0);
 
     const handlePose = (p) => {
         if(p && start) {
             const ang = checkJoints(p[0]);
             console.log(ang);
+            console.log("Expected angles \n",pose.data.angles);
+            const _score = getScore(pose.data?.angles, ang);
+            setScore(score + _score);
+            setFrames(frames + 1);
         }
     };
 
     return (
-        <Suspense fallback="Loading">
-            <div className="pose">
-                <div className="pose_sample">
-                    <div className="pose_title">{pose.data?.name}</div>
-                    <StorageImage 
-                        storagePath={pose.data?.image_url}
-                        className="pose_sample"
-                        alt="sample pose"
-                    />
-                    <div className={"timer"}>
-                        <CountdownCircleTimer
-                        onComplete={() => setFinish(true)}
-                        isPlaying={start}
-                        duration={15}
-                        colors={[
-                            ["#afa5ff", 0.33],
-                            ["#F7B801", 0.33],
-                            ["#A30000", 0.33],
-                        ]}
-                    >
-                        {({ remainingTime }) => remainingTime}
-                    </CountdownCircleTimer>
+        <Suspense fallback={<p>Loading</p>}>
+            {!finish ? (
+                <div className="pose">
+                    <div className="pose_sample">
+                        <div className="pose_title">{pose.data?.name}</div>
+                        <StorageImage 
+                            storagePath={pose.data?.image_url}
+                            className="pose_sample"
+                            alt="sample pose"
+                        />
+                        <div className={"timer"}>
+                            <CountdownCircleTimer
+                            onComplete={() => setFinish(true)}
+                            isPlaying={start}
+                            duration={15}
+                            colors={[
+                                ["#afa5ff", 0.33],
+                                ["#F7B801", 0.33],
+                                ["#A30000", 0.33],
+                            ]}
+                        >
+                            {({ remainingTime }) => remainingTime}
+                        </CountdownCircleTimer>
+                        </div>
+
+                        <div
+                            className={`start_button ${start ? "disabled" : ""}`}
+                            tabIndex={start ? -1 : 0}
+                            onClick={() => setStart(true)}
+                        >
+                            Start
+                        </div>
                     </div>
 
-                    <div
-                        className={`start_button ${start ? "disabled" : ""}`}
-                        tabIndex={start ? -1 : 0}
-                        onClick={() => setStart(true)}
-                    >
-                        Start
+                    <div className="pose_actual">
+                        <Posenet onEstimate = { handlePose}/>
                     </div>
                 </div>
-
-                <div className="pose_actual">
-                    <Posenet onEstimate = { handlePose}/>
-                </div>
-            </div>
+            ) : (
+                <Result
+                    score={Math.floor(score/frames)*pose.data?.level}
+                    isPose={true}
+                    id={pose.data?.NO_ID_FIELD}
+                    duration={15}
+                />
+            )}
+            
         </Suspense>
     );
 }
