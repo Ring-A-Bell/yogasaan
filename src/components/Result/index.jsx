@@ -1,12 +1,12 @@
 import { findAllByAltText } from "@testing-library/react";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import { useFirestore, useUser } from "reactfire";
 import "./index.scss";
 
 export default function Result ({score, isPose, id, duration}) {
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const { data:user } = useUser();
     const histref = useFirestore().collection("history");
 
@@ -40,7 +40,7 @@ export default function Result ({score, isPose, id, duration}) {
                 <div
                 className={"continue_button"}
                 tabIndex={0}
-                onClick={() => history.push("/")}
+                onClick={() => navigate("/")}
                 >
                 Continue
                 </div>
