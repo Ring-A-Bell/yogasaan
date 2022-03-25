@@ -34,6 +34,7 @@ export default function Header() {
 
     return (
         <div className='header'>
+        <Link to="/" className="header_logo">Yogasaan</Link>
             <div className='header_links'>
                 <IconLink icon={<IconHome />} to="/" name="Home" />
                 <IconLink icon={<IconStats />} to="/stats" name="Analytics" />

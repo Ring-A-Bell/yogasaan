@@ -4,6 +4,8 @@
 .card {
   width: 200px;
   height: 200px;
+  min-height: 200px;
+  min-width: 200px;
   border-radius: 24px;
   transition-duration: 0.3s;
   border: 2px solid $purpleLight;
