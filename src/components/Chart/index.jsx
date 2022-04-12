@@ -1,4 +1,4 @@
-import { Bar } from "react-chartjs-2";
+import { Bar } from "@reactchartjs/react-chart.js";
 import { useEffect, useState } from "react";
 import { useFirestoreCollectionData, useUser, useFirestore } from "reactfire";
 import _ from "lodash";
@@ -17,33 +17,32 @@ export default function Chart() {
         const _docs = [];
         const _poses = {};
         docs.data?.forEach((doc) => {
-            _docs.push({ uid: doc.uid, score: doc.score });
+            _docs.push({ pid: doc.id, score: doc.score });
         });
 
         pdocs.data?.forEach((doc) => {
             _poses[doc.NO_ID_FIELD] = doc.name;
         });
-        console.log(_poses);
+        
 
-        const gdocs = _.groupBy(_docs, (doc) => doc.id);
-        console.log(gdocs);
+        const gdocs = _.groupBy(_docs, (doc) => doc.pid);
 
-        const res = _.map(gdocs, (id, i) => ({
-            id:i,
-            score: _.sumBy(id, "score"),
+        const res = _.map(gdocs, (pid, id) => ({
+            pid:id,
+            score: _.sumBy(pid, "score"),
         }));
 
         const mapped = [];
         res.forEach((d) => {
             mapped.push({
-                name: _poses[d.id],
+                name: _poses[d.pid],
                 score: d.score,
             });
         });
-        console.log(mapped);
+        
 
-        const labels = _.map(res, "name");
-        const _data = _.map(res, "score");
+        const labels = _.map(mapped, "name");
+        const _data = _.map(mapped, "score");
 
         const resData = {
             labels: labels,
@@ -88,8 +87,6 @@ export default function Chart() {
 
 
     return (
-        <div>
-            BarChart
-        </div>
+        <Bar data={data} options={options} />
     );   
 }
