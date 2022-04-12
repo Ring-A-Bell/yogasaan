@@ -7,7 +7,7 @@ import Home from "./components/Home";
 import Header from "./components/Header";
 import Pose from "./components/Pose";
 import Profile from "./components/Profile";
-
+import Stats from "./components/Stats";
 
 function App() {
 
@@ -30,7 +30,7 @@ function App() {
               <div className="content">
                 <Routes>
                   <Route path="/" element={<Home />}></Route>
-                  <Route path="/stats">stats</Route>
+                  <Route path="/stats" element={<Stats />}></Route>
                   <Route path="/profile" element={<Profile />}></Route>
                   <Route path="/pose" element={<Pose poseID={"4XIRMFpmKmUiFNjWgUrr"}/>}></Route>
                 </Routes>

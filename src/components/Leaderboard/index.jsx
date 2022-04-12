@@ -19,7 +19,7 @@ export default function Leaderboard() {
             _docs.push({ uid: doc.uid, score: doc.score });
         });
 
-        users.data?.forEach((user) => {
+        users.data?.forEach((doc) => {
             _users[doc.NO_ID_FIELD] = doc.name;
         });
 
@@ -44,7 +44,7 @@ export default function Leaderboard() {
     return (
         <div className="leaderboard">
             {board.map((row, i) => (
-                <div className={"row"}>
+                <div className={"row"} key={i}>
                     <div className={"rank"}>
                         <span>{i + 1}.</span>
                         <span>{row.name}</span>

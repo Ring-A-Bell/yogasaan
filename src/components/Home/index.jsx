@@ -1,11 +1,21 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useFirestoreCollectionData, useFirestore } from "reactfire";
+import { useFirestoreCollectionData, useFirestore, useUser } from "reactfire";
 import Card from "../Card";
 import "./index.scss";
 
 export default function Home() {
     const poseRef = useFirestore().collection("poses");
+
+    const userRef = useFirestore().collection("users");
+    const { data:user } = useUser();
+
+    useEffect(() => {
+        userRef.doc(user.uid).set({
+            name: user.displayName,
+        });
+    }, []);
+
     const poses = useFirestoreCollectionData(poseRef); 
     const navigate = useNavigate();
 
