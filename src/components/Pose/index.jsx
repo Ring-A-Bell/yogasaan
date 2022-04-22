@@ -7,6 +7,8 @@ import { Navigate, useLocation } from "react-router";
 import { checkJoints } from "../../utils/getAngles";
 import { getScore } from "../../utils/getScore";
 import Result from "../Result";
+import swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 
 export default function Pose() {
@@ -15,11 +17,29 @@ export default function Pose() {
     const poseRef = useFirestore().collection("poses").doc(poseID);
     const pose = useFirestoreDocDataOnce(poseRef);
     const angles = useFirestoreCollectionData(poseRef);
+    const poseText = pose.data.desc;
 
     const [start, setStart] = useState(false);
     const [finish, setFinish] = useState(false);
     const [score, setScore] = useState(0);
     const [frames, setFrames] = useState(0);
+
+    const Swal = withReactContent(swal);
+    Swal.fire({
+        html: (
+        <p style={{ fontFamily: "Rubik, sans-serif", fontWeight: 300 }}>
+            Click the start button and get ready with your pose.
+            A 15 second timer has been
+            added for your convenience.
+            <br/><br/>
+            {poseText}
+            <br/><br/>
+            You will be scored on how close you follow the pose.
+        </p>
+        ),
+        confirmButtonText: "Continue",
+        confirmButtonColor: "#6b38fb",
+    });
 
     const handlePose = (p) => {
         if(p && start) {
