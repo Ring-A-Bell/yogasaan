@@ -1,11 +1,13 @@
 import "./index.scss";
 import Posenet from "react-posenet";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { StorageImage, useFirestore, useFirestoreCollectionData, useFirestoreDocDataOnce } from "reactfire";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { Navigate, useLocation } from "react-router";
 import { checkJoints } from "../../utils/getAngles";
+import { getMaxDev } from "../../utils/getMaxDev";
 import { getScore } from "../../utils/getScore";
+import { getDesc } from "../../utils/getDesc";
 import Result from "../Result";
 import swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -16,39 +18,45 @@ export default function Pose() {
     const poseID = query.get("pid");
     const poseRef = useFirestore().collection("poses").doc(poseID);
     const pose = useFirestoreDocDataOnce(poseRef);
-    const angles = useFirestoreCollectionData(poseRef);
-    const poseText = pose.data.desc;
+    var poseName = pose.data?.name;
 
     const [start, setStart] = useState(false);
     const [finish, setFinish] = useState(false);
     const [score, setScore] = useState(0);
     const [frames, setFrames] = useState(0);
 
-    const Swal = withReactContent(swal);
-    Swal.fire({
-        html: (
-        <p style={{ fontFamily: "Rubik, sans-serif", fontWeight: 300 }}>
-            Click the start button and get ready with your pose.
-            A 15 second timer has been
-            added for your convenience.
-            <br/><br/>
-            {poseText}
-            <br/><br/>
-            You will be scored on how close you follow the pose.
-        </p>
-        ),
-        confirmButtonText: "Continue",
-        confirmButtonColor: "#6b38fb",
-    });
+    useEffect(() => {
+        poseName = pose.data?.name;
+        const Swal = withReactContent(swal);
+        Swal.fire({
+            html: (
+            <p style={{ fontFamily: "Rubik, sans-serif", fontWeight: 300 }}>
+                Click the start button and get ready with your pose.
+                A 15 second timer has been
+                added for your convenience.
+                <br/>
+                You will be scored on how closely you follow the pose.
+                <br/><br/>
+                <br/><br/>
+                {getDesc(poseName)}
+            </p>
+            ),
+            confirmButtonText: "Continue",
+            confirmButtonColor: "#6b38fb",
+        });
+    }, []);
+
+    
 
     const handlePose = (p) => {
-        if(p && start) {
+        if(p && start && p.length>0) {
             const ang = checkJoints(p[0]);
-            console.log(ang);
-            console.log("Expected angles \n",pose.data.angles);
-            const _score = getScore(pose.data?.angles, ang);
+            const _score = getScore(pose.data?.angles, ang, frames);
+            if(frames==37||frames==185||frames==370)
+                getMaxDev(pose.data?.angles, ang, pose.data?.name);
             setScore(score + _score);
             setFrames(frames + 1);
+            console.log(frames);
         }
     };
 

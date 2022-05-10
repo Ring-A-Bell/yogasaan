@@ -23,7 +23,13 @@ export default function Home() {
     const Swal = withReactContent(swal);
     if (!localStorage.getItem("main"))
         Swal.fire({
-        title: "LOGO",
+        title: (
+            <img
+              src="/logo_small.png"
+              alt="Yogasaan"
+              style={{ width: 64, height: 64 }}
+            />
+          ),
         html: (
             <p style={{ fontFamily: "Rubik, sans-serif", fontWeight: 300 }}>
             Hey, {user.displayName}, <br />
@@ -55,14 +61,14 @@ export default function Home() {
 
                 <br/><br/>
                 <hr/>
-                <br/><br/>
+                {/*<br/><br/>
 
                 <div className="home_heading">Pose Flows</div>
                 <div className="card_container">
                     <Card title="Sample 1" onClick={() => poses2.data[0].poses?.map((p) => (console.log(p)))} path="poses/health-thumb1621432876.jpg" />
                     <Card title="Sample 2" onClick={() => console.log(poses2.data[0].poses)} path="poses/health-thumb1621432876.jpg" />
                     <Card title="Sample 3" onClick={() => console.log("click")} path="poses/health-thumb1621432876.jpg" />
-                </div>
+                    </div>*/}
             </div>
         </Suspense>
     );
