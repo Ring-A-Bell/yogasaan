@@ -18,7 +18,6 @@ export default function Pose() {
     const poseID = query.get("pid");
     const poseRef = useFirestore().collection("poses").doc(poseID);
     const pose = useFirestoreDocDataOnce(poseRef);
-    var poseName = pose.data?.name;
 
     const [start, setStart] = useState(false);
     const [finish, setFinish] = useState(false);
@@ -26,7 +25,6 @@ export default function Pose() {
     const [frames, setFrames] = useState(0);
 
     useEffect(() => {
-        poseName = pose.data?.name;
         const Swal = withReactContent(swal);
         Swal.fire({
             html: (
@@ -38,7 +36,7 @@ export default function Pose() {
                 You will be scored on how closely you follow the pose.
                 <br/><br/>
                 <br/><br/>
-                {getDesc(poseName)}
+                {getDesc(poseID)}
             </p>
             ),
             confirmButtonText: "Continue",
@@ -56,7 +54,7 @@ export default function Pose() {
                 getMaxDev(pose.data?.angles, ang, pose.data?.name);
             setScore(score + _score);
             setFrames(frames + 1);
-            console.log(frames);
+            console.log("Frame Number - " + frames);
         }
     };
 
@@ -66,6 +64,8 @@ export default function Pose() {
                 <div className="pose">
                     <div className="pose_sample">
                         <div className="pose_title">{pose.data?.name}</div>
+                        <br/>
+                        <div className="pose_level">POSE LEVEL -{'>'} {pose.data?.level}</div>
                         <StorageImage 
                             storagePath={pose.data?.image_url}
                             className="pose_sample"
@@ -101,10 +101,11 @@ export default function Pose() {
                 </div>
             ) : (
                 <Result
-                    score={Math.floor(score/frames)*pose.data?.level}
+                    score={Math.floor(score/frames)}
                     isPose={true}
                     id={pose.data?.NO_ID_FIELD}
-                    duration={15}
+                    duration={10}
+                    level={pose.data?.level}
                 />
             )}
             

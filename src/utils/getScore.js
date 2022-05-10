@@ -22,5 +22,7 @@ export function getScore(reqdDict, obtdDict, frameNum) {
   }
   maxDev = 0;
   if (ctr === 0) return 0;
+  if(scoresum/ctr>100)
+    return (scoresum/ctr)%100;
   return scoresum / ctr;
 }

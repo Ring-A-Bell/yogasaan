@@ -16,7 +16,7 @@ export default function Leaderboard() {
         const _users = [];
 
         docs.data?.forEach((doc) => {
-            _docs.push({ uid: doc.uid, score: doc.score });
+            _docs.push({ uid: doc.uid, score: (doc.score)*(doc.level) });
         });
 
         users.data?.forEach((doc) => {

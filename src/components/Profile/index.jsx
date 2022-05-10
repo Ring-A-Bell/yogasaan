@@ -21,7 +21,7 @@ import {
     useEffect(() => {
       let total = 0;
       docs.data?.forEach((doc) => {
-        total += doc.score;
+        total += (doc.score*doc.level);
       });
       setScore(total);
     }, [docs.data]);
@@ -38,7 +38,7 @@ import {
       <div className={"profile"}>
         <div className={"greeting"}>Hey, {user.displayName}</div>
         <div className={"score"}>
-          <span style={{ color: "#000", fontSize: 32 }}>Your have earned </span>
+          <span style={{ color: "#000", fontSize: 32 }}>You have earned </span>
           {score}
           <span style={{ color: "#000", fontSize: 32 }}> points. </span>
         </div>

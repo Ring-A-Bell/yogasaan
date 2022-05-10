@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { useFirestore, useUser } from "reactfire";
 import "./index.scss";
 
-export default function Result ({score, isPose, id, duration}) {
+export default function Result ({score, isPose, id, duration, level}) {
 
     const navigate = useNavigate();
     const { data:user } = useUser();
@@ -21,6 +21,7 @@ export default function Result ({score, isPose, id, duration}) {
                 id,
                 duration,
                 uid: user.uid,
+                level,
             };
             await histref.add(data);
 
