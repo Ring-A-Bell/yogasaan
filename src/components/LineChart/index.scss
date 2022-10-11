@@ -1,6 +1,11 @@
 @import "../scss/fonts";
 @import "../scss/colors";
 
+p {
+  font-family: $rubik;
+  font-size: 20px;
+  font-weight: 300;
+}
 .choice {
   font-family: $rubik;
   font-size: 20px;

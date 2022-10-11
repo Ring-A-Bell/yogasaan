@@ -14,6 +14,7 @@ export default function LineChart() {
 
     const [data, setData] = useState({});
     const [poseID, setPoseID] = useState("uQKKiXnUZHFf8iuMRuGb");
+    const [poseName, setPoseName] = useState("Mountain Pose");
 
     useEffect(() => {
         const res = [];
@@ -117,15 +118,16 @@ export default function LineChart() {
     return (
         <div>
             <Line data={data} options={options} />
+            <p>{poseName}</p>
             <div className="choice">
-                <text onClick={() => updatePose("uQKKiXnUZHFf8iuMRuGb")}>Mountain</text>
-                <text onClick={() => updatePose("GalUkpGYVg34PfalkuTE")}>Warrior 2</text>
-                <text onClick={() => updatePose("bsn0ppCqhVWuJZE5sQpB")}>Warrior 3</text>
-                <text onClick={() => updatePose("R7G6tzbjRhmzDnRXTmr5")}>Half Moon</text>
-                <text onClick={() => updatePose("T7w6b8wlLMj8qzyUzdwZ")}>Tree</text>
-                <text onClick={() => updatePose("1Cn2jCnvytlIVTfBL7MP")}>Staff</text>
-                <text onClick={() => updatePose("bzxZO3me2gvQUdobGuoZ")}>Easy</text>
-                <text onClick={() => updatePose("NdqzUSOSw4aSF5Spo9ZJ")}>Cow</text>
+                <text onClick={() => {updatePose("uQKKiXnUZHFf8iuMRuGb"); setPoseName("Mountain Pose");}}>Mountain</text>
+                <text onClick={() => {updatePose("GalUkpGYVg34PfalkuTE"); setPoseName("Warrior 2 Pose");}}>Warrior 2</text>
+                <text onClick={() => {updatePose("bsn0ppCqhVWuJZE5sQpB"); setPoseName("Warrior 3 Pose");}}>Warrior 3</text>
+                <text onClick={() => {updatePose("R7G6tzbjRhmzDnRXTmr5"); setPoseName("Half Moon Pose");}}>Half Moon</text>
+                <text onClick={() => {updatePose("T7w6b8wlLMj8qzyUzdwZ"); setPoseName("Tree Pose");}}>Tree</text>
+                <text onClick={() => {updatePose("1Cn2jCnvytlIVTfBL7MP"); setPoseName("Staff Pose");}}>Staff</text>
+                <text onClick={() => {updatePose("bzxZO3me2gvQUdobGuoZ"); setPoseName("Easy Pose");}}>Easy</text>
+                <text onClick={() => {updatePose("NdqzUSOSw4aSF5Spo9ZJ"); setPoseName("Cow Pose");}}>Cow</text>
             </div>
         </div>
     );   

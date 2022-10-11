@@ -1,6 +1,6 @@
 export function getDesc(poseName) {
     if(poseName==="1Cn2jCnvytlIVTfBL7MP")
-        return "The LEFT side of your body should face the camera. \n\n Sit up straight with your legs fully extended as shown in the photo. Your ears, shoulder and arms should be in a straight line, keeping your back straight. Place your palms on the ground.";
+        return "The LEFT side of your body should face the camera.  Sit up straight with your legs fully extended as shown in the photo. Your ears, shoulder and arms should be in a straight line, keeping your back straight. Place your palms on the ground.";
     else if(poseName==="7AXK03Nn6rk25frZVXSs")
         return "The LEFT side of your body should face the camera.  Sit up straight with your knees together and feet surrounding your . Your ears, shoulder and arms should be in a straight line, keeping your back straight. Face your feet straight back.";
     else if(poseName==="Bc7vj55qzyCQ5UOV7qwJ")

@@ -23,17 +23,18 @@ export default function Pose() {
     const [finish, setFinish] = useState(false);
     const [score, setScore] = useState(0);
     const [frames, setFrames] = useState(0);
+    const [time, setTime] = useState(15);
 
     useEffect(() => {
         const Swal = withReactContent(swal);
         Swal.fire({
             html: (
-            <p style={{ fontFamily: "Rubik, sans-serif", fontWeight: 300 }}>
+            <p style={{ fontFamily: "Rubik, sans-serif", fontWeight: 300, textAlign: "center" }}>
                 Click the start button and get ready with your pose.
-                A 15 second timer has been
-                added for your convenience.
-                <br/>
                 You will be scored on how closely you follow the pose.
+                <br/><br/>
+                Your pose will start getting scored when the timer reaches 10s.
+                <br/>
                 <br/><br/>
                 <br/><br/>
                 {getDesc(poseID)}
@@ -44,18 +45,26 @@ export default function Pose() {
         });
     }, []);
 
+    const renderTime = ({remainingTime}) => {
+        setTime(remainingTime);
+        return (
+            <div className="value">{remainingTime}</div>
+        );
+    }
+
     
 
     const handlePose = (p) => {
-        if(p && start && p.length>0) {
+        if(p && start && p.length>0 && time<=10) {
             const ang = checkJoints(p[0]);
             const _score = getScore(pose.data?.angles, ang, frames);
-            if(frames==37||frames==185||frames==370)
+            if(frames==30||frames==110||frames==200)
                 getMaxDev(pose.data?.angles, ang, pose.data?.name);
             setScore(score + _score);
             setFrames(frames + 1);
-            console.log("Frame Number - " + frames);
         }
+        if(time<=1)
+            console.log("Performance (FPS) --> " + frames/8);
     };
 
     return (
@@ -82,7 +91,7 @@ export default function Pose() {
                                 ["#A30000", 0.33],
                             ]}
                         >
-                            {({ remainingTime }) => remainingTime}
+                            {renderTime}
                         </CountdownCircleTimer>
                         </div>
 
